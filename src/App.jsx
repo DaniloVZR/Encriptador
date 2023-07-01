@@ -1,42 +1,43 @@
 import { useState } from 'react';
-import './App.css'
+import './App.css';
 
 function App() {
+  const [oracion, setOracion] = useState('');
+  const [isEncrypted, setIsEncrypted] = useState(false);
 
-  const [oracion, setOracion] = useState("")
+  const letterMapping = {
+    a: '%¡',
+    b: '%"',
+    c: '%@',
+    d: '%$',
+    e: '&¡',
+    f: '&"',
+    g: '&@',
+    h: '&#',
+    i: '&$',
+    j: '¿¡',
+    k: '¿"',
+    l: '¿@',
+    m: '¿$',
+    n: '?¡',
+    ñ: '?"',
+    o: '?@',
+    p: '?#',
+    q: '?$',
+    r: '*¡',
+    s: '*"',
+    t: '*@',
+    u: '*#',
+    v: '*$',
+    w: '-¡',
+    x: '-"',
+    y: '-@',
+    z: '-#',
+    // Add mappings for other letters as needed
+  };
 
   const handleSubmitEncrypt = (e) => {
-    e.preventDefault()
-    const letterMapping = {
-      a: '%¡',
-      b: '%"',
-      c: '%@',
-      d: '%$',
-      e: '&¡',
-      f: '&"',
-      g: '&@',
-      h: '&#',
-      i: '&$',
-      j: '¿¡',
-      k: '¿"',
-      l: '¿l',
-      m: '¿$',
-      n: '?¡',
-      ñ: '?"',
-      o: '?@',
-      p: '?#',
-      q: '?$',
-      r: '*¡',
-      s: '*"',
-      t: '*@',
-      u: '*#',
-      v: '*$',
-      w: '-¡',
-      x: '-"',
-      y: '-@',
-      z: '-#',
-      // Add mappings for other letters as needed
-    };
+    e.preventDefault();
 
     const encryptedOracion = oracion
       .split('')
@@ -49,23 +50,32 @@ function App() {
         }
       })
       .join('');
+
     setOracion(encryptedOracion);
+    setIsEncrypted(true);
+  };
+
+  const handleSubmitDecrypt = (e) => {
+    e.preventDefault();
+
+    let decryptedOracion = oracion;
+    for (const [key, value] of Object.entries(letterMapping)) {
+      decryptedOracion = decryptedOracion.split(value).join(key);
+    }
+
+    setOracion(decryptedOracion);
+    setIsEncrypted(false);
   };
 
   return (
-    <div className='main'>
-      <form onSubmit={handleSubmitEncrypt}>
+    <div className="main">
+      <form onSubmit={isEncrypted ? handleSubmitDecrypt : handleSubmitEncrypt}>
         <textarea onChange={(e) => setOracion(e.target.value)}></textarea>
-        <button type='submit'>Encriptar</button>
+        <button type="submit">{isEncrypted ? 'Desencriptar' : 'Encriptar'}</button>
       </form>
-      {
-        oracion ? (
-          <p>{oracion}</p>
-        ) :
-          null
-      }
+      {oracion && <p>{oracion}</p>}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -5,8 +5,14 @@
   text-align: center;
 }
 
+textarea {
+  height: 100px;
+  width: 500px;
+}
+
 .main {
   display: flex;
+  flex-direction: column;
   gap: 5rem;
 }
 
