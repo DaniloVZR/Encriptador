@@ -36,9 +36,7 @@ function App() {
     // Add mappings for other letters as needed
   };
 
-  const handleSubmitEncrypt = (e) => {
-    e.preventDefault();
-
+  const encryptOracion = () => {
     const encryptedOracion = oracion
       .split('')
       .map((char) => {
@@ -55,9 +53,7 @@ function App() {
     setIsEncrypted(true);
   };
 
-  const handleSubmitDecrypt = (e) => {
-    e.preventDefault();
-
+  const decryptOracion = () => {
     let decryptedOracion = oracion;
     for (const [key, value] of Object.entries(letterMapping)) {
       decryptedOracion = decryptedOracion.split(value).join(key);
@@ -69,10 +65,11 @@ function App() {
 
   return (
     <div className="main">
-      <form onSubmit={isEncrypted ? handleSubmitDecrypt : handleSubmitEncrypt}>
-        <textarea onChange={(e) => setOracion(e.target.value)}></textarea>
-        <button type="submit">{isEncrypted ? 'Desencriptar' : 'Encriptar'}</button>
-      </form>
+      <textarea onChange={(e) => setOracion(e.target.value)}></textarea>
+      <div className="button-container">
+        <button onClick={encryptOracion}>Encriptar</button>
+        <button onClick={decryptOracion}>Desencriptar</button>
+      </div>
       {oracion && <p>{oracion}</p>}
     </div>
   );

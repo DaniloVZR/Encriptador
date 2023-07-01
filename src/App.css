@@ -13,11 +13,11 @@ textarea {
 .main {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 2rem;
 }
 
-.main form {
+.button-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   gap: 1rem;
 }
